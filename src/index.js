@@ -1,3 +1,4 @@
+import axions from 'axios';
 const formRef = document.querySelector('#search-form');
 const inputRef = document.querySelector('searchQuery');
 
