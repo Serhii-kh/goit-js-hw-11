@@ -72,6 +72,10 @@ function renderImgCard(images) {
   galleryRef.innerHTML = markup;
 }
 
+// ?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}
+
+// ?key=34855628-78991e6cca5fe0310616aeb58&
+
 // Notiflix.Notify.failure(
 //   "We're sorry, but you've reached the end of search results."
 // );
