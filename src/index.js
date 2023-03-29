@@ -1,6 +1,18 @@
-import axions from 'axios';
+import axios from 'axios';
+import Notiflix, { Notify } from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 const formRef = document.querySelector('#search-form');
-const inputRef = document.querySelector('searchQuery');
+// const inputRef = document.querySelector('searchQuery');
+const API_KEY = '34855628-78991e6cca5fe0310616aeb58';
+const BASE_URL = 'https://pixabay.com/api/';
+const BASE_FETCH_OPTIONS =
+  'image_type=photo&orientation=horizontal&safesearch=true';
+
+const instance = axios.create({
+  baseURL: BASE_URL,
+});
 
 formRef.addEventListener('submit', onFormSubmit);
 
@@ -9,23 +21,22 @@ console.log(formRef.elements.searchQuery);
 
 function onFormSubmit(e) {
   e.preventDefault();
-  console.log(e.currentTarget.elements.searchQuery.value);
+
+  const inputRefValue = e.currentTarget.elements.searchQuery.value;
+
+  console.log(inputRefValue);
+
+  const fetchImages = async () => {
+    return await instance.get(
+      `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}`
+    );
+  };
+
+  fetchImages().then(({ data }) => {
+    console.log(data);
+  });
 }
 
-const fetchUsers = async () => {
-  const baseUrl = 'https://jsonplaceholder.typicode.com';
-  const userIds = [1, 2, 3];
-
-  // 1. Создаём массив промисов
-  const arrayOfPromises = userIds.map(async userId => {
-    const response = await fetch(`${baseUrl}/users/${userId}`);
-    console.log(arrayOfPromises);
-    return response.json();
-  });
-
-  // 2. Запускаем все промисы параллельно и ждем их завершения
-  const users = await Promise.all(arrayOfPromises);
-  console.log(users);
-};
-
-fetchUsers();
+// Notiflix.Notify.info(
+//   "We're sorry, but you've reached the end of search results."
+// );
