@@ -1,11 +1,10 @@
 import axios from 'axios';
-import Notiflix, { Notify } from 'notiflix';
+import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
-// const inputRef = document.querySelector('searchQuery');
 const API_KEY = '34855628-78991e6cca5fe0310616aeb58';
 const BASE_URL = 'https://pixabay.com/api/';
 const BASE_FETCH_OPTIONS =
@@ -17,25 +16,28 @@ const instance = axios.create({
 
 formRef.addEventListener('submit', onFormSubmit);
 
-console.log(formRef);
-console.log(formRef.elements.searchQuery);
-
 function onFormSubmit(e) {
   e.preventDefault();
+
   const inputRefValue = e.currentTarget.elements.searchQuery.value;
   const fetchImages = async () => {
     return await instance.get(
       `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}`
     );
   };
-  console.log(inputRefValue);
 
   fetchImages()
     .then(({ data }) => {
-      console.log(data.hits);
+      if (data.hits.length === 0) {
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+        return;
+      }
       return data.hits;
     })
-    .then(renderImgCard);
+    .then(renderImgCard)
+    .catch(error => console.log(error));
 }
 
 function renderImgCard(images) {
