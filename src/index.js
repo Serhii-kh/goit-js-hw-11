@@ -22,18 +22,20 @@ console.log(formRef.elements.searchQuery);
 
 function onFormSubmit(e) {
   e.preventDefault();
-
   const inputRefValue = e.currentTarget.elements.searchQuery.value;
-  const fetchImages = async inputRefValue => {
+  const fetchImages = async () => {
     return await instance.get(
       `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}`
     );
   };
   console.log(inputRefValue);
 
-  fetchImages().then(({ data }) => {
-    console.log(data);
-  });
+  fetchImages()
+    .then(({ data }) => {
+      console.log(data.hits);
+      return data.hits;
+    })
+    .then(renderImgCard);
 }
 
 function renderImgCard(images) {
@@ -76,6 +78,8 @@ function renderImgCard(images) {
 
 // ?key=34855628-78991e6cca5fe0310616aeb58&
 
+//pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
+
 // Notiflix.Notify.failure(
 //   "We're sorry, but you've reached the end of search results."
 // );
@@ -90,7 +94,7 @@ function renderImgCard(images) {
 // comments - количество комментариев.
 // downloads - количество загрузок.
 
-{
+https: {
   /* <div class="photo-card">
   <img src="" alt="" loading="lazy" />
   <div class="info">
