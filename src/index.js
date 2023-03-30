@@ -21,10 +21,9 @@ async function onFormSubmit(e) {
 
   const inputRefValue = e.currentTarget.elements.searchQuery.value;
   const fetchImages = async () => {
-    const response = await instance.get(
+    return await instance.get(
       `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}`
     );
-    return response;
   };
 
   await fetchImages()

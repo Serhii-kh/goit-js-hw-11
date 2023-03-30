@@ -1,3 +1,15 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
 
+.gallery {
+  display: flex;
+  gap: 15px;
+}
+
+.photo-card {
+  max-width: (vw / 4);
+}
+
+.search-form {
+  outline: 15px solid greenyellow;
+}
