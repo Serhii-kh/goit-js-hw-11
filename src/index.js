@@ -16,17 +16,18 @@ const instance = axios.create({
 
 formRef.addEventListener('submit', onFormSubmit);
 
-function onFormSubmit(e) {
+async function onFormSubmit(e) {
   e.preventDefault();
 
   const inputRefValue = e.currentTarget.elements.searchQuery.value;
   const fetchImages = async () => {
-    return await instance.get(
+    const response = await instance.get(
       `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}`
     );
+    return response;
   };
 
-  fetchImages()
+  await fetchImages()
     .then(({ data }) => {
       if (data.hits.length === 0) {
         Notiflix.Notify.info(
@@ -75,3 +76,27 @@ function renderImgCards(images) {
 
   galleryRef.innerHTML = markup;
 }
+
+// function onFormSubmit(e) {
+//   e.preventDefault();
+
+//   const inputRefValue = e.currentTarget.elements.searchQuery.value;
+//   const fetchImages = async () => {
+//     return await instance.get(
+//       `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}`
+//     );
+//   };
+
+//   fetchImages()
+//     .then(({ data }) => {
+//       if (data.hits.length === 0) {
+//         Notiflix.Notify.info(
+//           "We're sorry, but you've reached the end of search results."
+//         );
+//         return;
+//       }
+//       return data.hits;
+//     })
+//     .then(renderImgCards)
+//     .catch(error => console.log(error));
+// }
