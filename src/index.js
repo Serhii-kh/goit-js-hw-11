@@ -56,7 +56,7 @@ function renderImgCard(images) {
   <img src=${webformatURL}  alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
-      <b>${likes}</b>
+      <b>Likes - ${likes}</b>
     </p>
     <p class="info-item">
       <b>${views}</b>
