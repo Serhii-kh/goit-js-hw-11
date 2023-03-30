@@ -36,11 +36,11 @@ function onFormSubmit(e) {
       }
       return data.hits;
     })
-    .then(renderImgCard)
+    .then(renderImgCards)
     .catch(error => console.log(error));
 }
 
-function renderImgCard(images) {
+function renderImgCards(images) {
   const markup = images
     .map(
       ({
@@ -59,13 +59,13 @@ function renderImgCard(images) {
       <b>Likes - ${likes}</b>
     </p>
     <p class="info-item">
-      <b>${views}</b>
+      <b>Views - ${views}</b>
     </p>
     <p class="info-item">
-      <b>${comments}</b>
+      <b>Comments - ${comments}</b>
     </p>
     <p class="info-item">
-      <b>${downloads}</b>
+      <b>Downloads - ${downloads}</b>
     </p>
   </div>
 </div>`;
@@ -74,44 +74,4 @@ function renderImgCard(images) {
     .join('');
 
   galleryRef.innerHTML = markup;
-}
-
-// ?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}
-
-// ?key=34855628-78991e6cca5fe0310616aeb58&
-
-//pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
-
-// Notiflix.Notify.failure(
-//   "We're sorry, but you've reached the end of search results."
-// );
-
-// В ответе будет массив изображений.Каждое изображение:
-
-// webformatURL - ссылка на маленькое изображение для списка карточек.
-// largeImageURL - ссылка на большое изображение.
-// tags - строка с описанием изображения. Подойдет для атрибута alt.
-// likes - количество лайков.
-// views - количество просмотров.
-// comments - количество комментариев.
-// downloads - количество загрузок.
-
-https: {
-  /* <div class="photo-card">
-  <img src="" alt="" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-    </p>
-  </div>
-</div>; */
 }
