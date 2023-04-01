@@ -12,3 +12,6 @@ body {
   line-height: 1.5;
 }
 
+.search-form {
+  outline: 2 px solid black;
+}
