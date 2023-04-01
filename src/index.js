@@ -16,7 +16,9 @@ loadMoreBtnRef.addEventListener('click', onLoadMoreBtnClick);
 async function onFormSubmit(e) {
   e.preventDefault();
 
+  clearImagesDiv();
   fetchImgService.query = e.currentTarget.elements.searchQuery.value;
+  fetchImgService.resetPage();
 
   await fetchImgService
     .fetchImages()
@@ -27,7 +29,6 @@ async function onFormSubmit(e) {
         );
         return;
       }
-      console.log(data.hits);
 
       return data.hits;
     })
@@ -79,6 +80,9 @@ function renderImgCards(images) {
     .join('');
 
   galleryRef.insertAdjacentHTML('beforeend', markup);
+}
+function clearImagesDiv() {
+  galleryRef.innerHTML = '';
 }
 
 // function onFormSubmit(e) {

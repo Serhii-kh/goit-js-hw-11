@@ -7,6 +7,7 @@ export class FetchImgService {
   }
 
   fetchImages = async () => {
+    console.log(this);
     const BASE_URL = 'https://pixabay.com/api/';
     const API_KEY = '34855628-78991e6cca5fe0310616aeb58';
     const BASE_FETCH_OPTIONS =
@@ -20,8 +21,7 @@ export class FetchImgService {
       `?key=${API_KEY}&q=${this.searchQuery}&${BASE_FETCH_OPTIONS}&page=${this.page}`
     );
 
-    this.page += 1;
-
+    this.incrementPage();
     return res;
   };
 
@@ -32,5 +32,12 @@ export class FetchImgService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-}
 
+  incrementPage() {
+    this.page += 1;
+  }
+
+  resetPage() {
+    this.page = 1;
+  }
+}
