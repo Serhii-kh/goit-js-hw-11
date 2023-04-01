@@ -8,6 +8,8 @@ const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
 const loadMoreBtnRef = document.querySelector('.load-more');
 
+loadMoreBtnRef.classList.add('is-hidden');
+
 const fetchImgService = new FetchImgService();
 
 formRef.addEventListener('submit', onFormSubmit);
@@ -17,7 +19,7 @@ async function onFormSubmit(e) {
   e.preventDefault();
 
   clearImagesDiv();
-  fetchImgService.query = e.currentTarget.elements.searchQuery.value;
+  fetchImgService.searchQuery = e.currentTarget.elements.searchQuery.value;
   fetchImgService.resetPage();
 
   await fetchImgService
@@ -33,7 +35,9 @@ async function onFormSubmit(e) {
       return data.hits;
     })
     .then(renderImgCards)
-    .catch(error => console.log(error));
+		.catch(error => console.log(error));
+	
+  // loadMoreBtnRef.classList.remove('is-hidden');
 }
 
 async function onLoadMoreBtnClick() {
@@ -81,6 +85,7 @@ function renderImgCards(images) {
 
   galleryRef.insertAdjacentHTML('beforeend', markup);
 }
+
 function clearImagesDiv() {
   galleryRef.innerHTML = '';
 }
