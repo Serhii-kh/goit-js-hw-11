@@ -1,36 +1,25 @@
 import axios from 'axios';
 import Notiflix from 'notiflix';
+import { FetchImgService } from './js/fetch-images';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
-const loadMoreBtnRef = document.querySelector('load-more');
-const API_KEY = '34855628-78991e6cca5fe0310616aeb58';
-const BASE_URL = 'https://pixabay.com/api/';
-const BASE_FETCH_OPTIONS =
-  'image_type=photo&orientation=horizontal&safesearch=true&per_page=40';
+const loadMoreBtnRef = document.querySelector('.load-more');
 
-const instance = axios.create({
-  baseURL: BASE_URL,
-});
+const fetchImgService = new FetchImgService();
 
 formRef.addEventListener('submit', onFormSubmit);
-// loadMoreBtnRef.addEventListener('click', onLoadMoreBtnClick);
+loadMoreBtnRef.addEventListener('click', onLoadMoreBtnClick);
 
 async function onFormSubmit(e) {
   e.preventDefault();
 
-  const inputRefValue = e.currentTarget.elements.searchQuery.value;
-  // const submitBtnRef = e.currentTarget.elements.;
-  let page = 2;
-  const fetchImages = async () => {
-    return await instance.get(
-      `?key=${API_KEY}&q=${inputRefValue}&${BASE_FETCH_OPTIONS}&page=${page}`
-    );
-  };
+  fetchImgService.query = e.currentTarget.elements.searchQuery.value;
 
-  await fetchImages()
+  await fetchImgService
+    .fetchImages()
     .then(({ data }) => {
       if (data.hits.length === 0) {
         Notiflix.Notify.info(
@@ -44,10 +33,17 @@ async function onFormSubmit(e) {
     })
     .then(renderImgCards)
     .catch(error => console.log(error));
-  page += 1;
 }
 
-function onLoadMoreBtnClick() {}
+async function onLoadMoreBtnClick() {
+  await fetchImgService
+    .fetchImages()
+    .then(({ data }) => data.hits)
+    .then(renderImgCards)
+    .catch(error => {
+      console.log(error);
+    });
+}
 
 function renderImgCards(images) {
   const markup = images
@@ -82,7 +78,7 @@ function renderImgCards(images) {
     )
     .join('');
 
-  galleryRef.innerHTML = markup;
+  galleryRef.insertAdjacentHTML('beforeend', markup);
 }
 
 // function onFormSubmit(e) {
