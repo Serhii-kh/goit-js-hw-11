@@ -4,11 +4,13 @@ import { FetchImgService } from './js/fetch-images';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import simpleLightbox from 'simplelightbox';
+import _debounce, { debounce } from 'debounce';
 
 const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
 const loadMoreBtnRef = document.querySelector('.load-more');
 const IS_HIDDEN = 'is-hidden';
+const DELAY = 250;
 
 let startNumberOfImages = 40;
 
@@ -19,34 +21,40 @@ const fetchImgService = new FetchImgService();
 formRef.addEventListener('submit', onFormSubmit);
 loadMoreBtnRef.addEventListener('click', onLoadMoreBtnClick);
 
-function onFormSubmit(e) {
+async function onFormSubmit(e) {
   e.preventDefault();
 
   clearImagesDiv();
-  fetchImgService.searchQuery =
-    e.currentTarget.elements.searchQuery.value.trim();
+
   fetchImgService.resetPage();
 
   loadMoreBtnRef.classList.add(IS_HIDDEN);
+
+  fetchImgService.searchQuery =
+    e.currentTarget.elements.searchQuery.value.trim();
 
   if (fetchImgService.searchQuery === '') {
     return Notiflix.Notify.failure('Please, enter your search query!.');
   }
 
-  fetchImgService
+  await fetchImgService
     .fetchImages()
     .then(data => {
       if (data.hits.length === 0) {
         return Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-      } else if (data.hits.length < 40) {
+      }
+      if (data.hits.length < 40) {
         loadMoreBtnRef.classList.add(IS_HIDDEN);
 
         Notiflix.Notify.info(
           "We're sorry, but you've reached the end of search results."
         );
-      } else if (fetchImgService.page > 1) {
+      } else {
+        loadMoreBtnRef.classList.remove(IS_HIDDEN);
+      }
+      if (fetchImgService.page > 1) {
         Notiflix.Notify.success(
           `Hooray! We found ${fetchImgService.totalHits} images.`
         );
@@ -54,9 +62,10 @@ function onFormSubmit(e) {
 
       return data.hits;
     })
-    .then(renderImgCards);
-
-  loadMoreBtnRef.classList.remove(IS_HIDDEN);
+    .then(renderImgCards)
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 function onLoadMoreBtnClick() {
@@ -68,13 +77,11 @@ function onLoadMoreBtnClick() {
     if (startNumberOfImages === fetchImgService.totalHits) {
       loadMoreBtnRef.classList.add(IS_HIDDEN);
 
-      Notiflix.Notify.info(
+      return Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
     }
   });
-
-  console.log(galleryRef.children.length);
 }
 
 function renderImgCards(images) {

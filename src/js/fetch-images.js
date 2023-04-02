@@ -21,6 +21,7 @@ export class FetchImgService {
       const response = await instance.get(
         `?key=${API_KEY}&q=${this.searchQuery}&${BASE_FETCH_OPTIONS}&page=${this.page}`
       );
+
       const objectOfImages = response.data;
       this.totalHits = response.data.totalHits;
       this.incrementPage();
@@ -30,7 +31,9 @@ export class FetchImgService {
 
       return objectOfImages;
     } catch {
-      ('error');
+      error => {
+        console.log(error);
+      };
     }
   }
 

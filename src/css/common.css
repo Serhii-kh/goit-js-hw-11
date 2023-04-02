@@ -17,6 +17,10 @@ a {
   color: inherit;
 }
 
+p {
+  margin: 0;
+}
+
 .is-hidden {
   display: none;
 }
@@ -45,3 +49,13 @@ img {
 button {
   background-color: white;
 }
+
+button:hover {
+  background-color: aquamarine;
+}
+
+.info-item:not(:last-child) {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
