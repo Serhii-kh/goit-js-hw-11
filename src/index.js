@@ -7,6 +7,7 @@ const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
 const loadMoreBtnRef = document.querySelector('.load-more');
 const IS_HIDDEN = 'is-hidden';
+const fetchImgService = new FetchImgService();
 
 let startNumberOfImages = 40;
 let lightbox = new SimpleLightbox('.photo-card a', {
@@ -16,8 +17,6 @@ let lightbox = new SimpleLightbox('.photo-card a', {
 });
 
 loadMoreBtnRef.classList.add(IS_HIDDEN);
-
-const fetchImgService = new FetchImgService();
 
 formRef.addEventListener('submit', onFormSubmit);
 loadMoreBtnRef.addEventListener('click', onLoadMoreBtnClick);
