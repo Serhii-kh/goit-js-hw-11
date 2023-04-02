@@ -13,6 +13,11 @@ const IS_HIDDEN = 'is-hidden';
 const DELAY = 250;
 
 let startNumberOfImages = 40;
+let lightbox = new SimpleLightbox('.photo-card a', {
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 loadMoreBtnRef.classList.add(IS_HIDDEN);
 
@@ -96,7 +101,7 @@ function renderImgCards(images) {
         comments,
         downloads,
       }) => {
-        return `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
+        return `<div class="photo-card"><a class="gallery__item" href="${largeImageURL}">
   <img src=${webformatURL}  alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
@@ -112,12 +117,14 @@ function renderImgCards(images) {
       <b>Downloads - ${downloads}</b>
     </p>
   </div>
-</div></a>`;
+	</a>
+</div>`;
       }
     )
     .join('');
 
   galleryRef.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
 }
 
 function clearImagesDiv() {
