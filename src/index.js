@@ -7,7 +7,6 @@ const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
 const loadMoreBtnRef = document.querySelector('.load-more');
 const IS_HIDDEN = 'is-hidden';
-const DELAY = 250;
 
 let startNumberOfImages = 40;
 let lightbox = new SimpleLightbox('.photo-card a', {
