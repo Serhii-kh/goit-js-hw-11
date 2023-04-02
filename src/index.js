@@ -1,10 +1,7 @@
-import axios from 'axios';
 import Notiflix from 'notiflix';
 import { FetchImgService } from './js/fetch-images';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import simpleLightbox from 'simplelightbox';
-import _debounce, { debounce } from 'debounce';
 
 const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
@@ -16,7 +13,7 @@ let startNumberOfImages = 40;
 let lightbox = new SimpleLightbox('.photo-card a', {
   captions: true,
   captionsData: 'alt',
-  captionDelay: 250,
+  captionDelay: 200,
 });
 
 loadMoreBtnRef.classList.add(IS_HIDDEN);

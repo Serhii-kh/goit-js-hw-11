@@ -35,6 +35,9 @@ p {
 }
 
 .photo-card {
+  display: flex;
+  align-items: end;
+
   max-width: calc((100% - 20px) / 3);
   border: 1px solid grey;
   border-radius: 4px;
@@ -58,3 +61,5 @@ button:hover {
   margin-top: 0;
   margin-bottom: 10px;
 }
+
+/* .gallery__item {} */
