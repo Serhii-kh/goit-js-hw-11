@@ -12,7 +12,7 @@ export class FetchImgService {
     this.totalHits = 0;
   }
 
-  fetchImages = async () => {
+  async fetchImages() {
     const instance = axios.create({
       baseURL: BASE_URL,
     });
@@ -32,7 +32,7 @@ export class FetchImgService {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   incrementPage() {
     this.page += 1;
