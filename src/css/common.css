@@ -52,10 +52,12 @@ img {
 }
 
 button {
-  color: blue;
+  color: darkmagenta;
   background-color: rgb(247, 247, 202);
-  border: 1px solid black;
+  border: 1px solid darkmagenta;
   border-radius: 4px;
+
+  min-height: 30px;
 }
 
 button:hover {
@@ -67,7 +69,6 @@ button:hover {
   left: 50%;
 
   min-width: 100px;
-  min-height: 30px;
 }
 
 .info-item:not(:last-child) {
@@ -75,4 +76,8 @@ button:hover {
   margin-bottom: 10px;
 }
 
-/* .gallery__item {} */
+input {
+  min-height: 30px;
+  border: 1px solid darkmagenta;
+  border-radius: 4px;
+}
