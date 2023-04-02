@@ -61,7 +61,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(193, 241, 225);
+  background-color: rgb(228, 250, 243);
 }
 
 .load-more {
@@ -80,4 +80,6 @@ input {
   min-height: 30px;
   border: 1px solid darkmagenta;
   border-radius: 4px;
+
+  background-color: rgb(241, 241, 217);
 }
