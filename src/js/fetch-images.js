@@ -17,19 +17,21 @@ export class FetchImgService {
       baseURL: BASE_URL,
     });
 
-    const response = await instance.get(
-      `?key=${API_KEY}&q=${this.searchQuery}&${BASE_FETCH_OPTIONS}&page=${this.page}`
-    );
+    try {
+      const response = await instance.get(
+        `?key=${API_KEY}&q=${this.searchQuery}&${BASE_FETCH_OPTIONS}&page=${this.page}`
+      );
+      const objectOfImages = response.data;
+      this.totalHits = response.data.totalHits;
+      this.incrementPage();
 
-    const objectOfImages = response.data;
+      console.log(response);
+      console.log(objectOfImages);
 
-    this.totalHits = response.data.totalHits;
-    this.incrementPage();
-
-    console.log(response);
-    console.log(objectOfImages);
-
-    return objectOfImages;
+      return objectOfImages;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   incrementPage() {

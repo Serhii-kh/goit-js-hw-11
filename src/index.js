@@ -22,8 +22,13 @@ function onFormSubmit(e) {
   e.preventDefault();
 
   clearImagesDiv();
-  fetchImgService.searchQuery = e.currentTarget.elements.searchQuery.value;
+  fetchImgService.searchQuery =
+    e.currentTarget.elements.searchQuery.value.trim();
   fetchImgService.resetPage();
+
+  if (fetchImgService.searchQuery === '') {
+    return Notiflix.Notify.failure('Please, enter your search query!.');
+  }
 
   fetchImgService
     .fetchImages()
