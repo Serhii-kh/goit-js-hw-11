@@ -25,8 +25,8 @@ export class FetchImgService {
       this.totalHits = response.data.totalHits;
       this.incrementPage();
 
-      console.log(response);
       console.log(objectOfImages);
+      console.log(this);
 
       return objectOfImages;
     } catch (error) {

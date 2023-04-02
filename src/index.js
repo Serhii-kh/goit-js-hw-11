@@ -51,7 +51,6 @@ function onFormSubmit(e) {
     })
     .then(renderImgCards);
 
-  console.log(galleryRef.children.length);
 }
 
 function onLoadMoreBtnClick() {
