@@ -8,10 +8,11 @@ import simpleLightbox from 'simplelightbox';
 const galleryRef = document.querySelector('.gallery');
 const formRef = document.querySelector('#search-form');
 const loadMoreBtnRef = document.querySelector('.load-more');
+const IS_HIDDEN = 'is-hidden';
 
 let startNumberOfImages = 40;
 
-loadMoreBtnRef.classList.add('is-hidden');
+loadMoreBtnRef.classList.add(IS_HIDDEN);
 
 const fetchImgService = new FetchImgService();
 
@@ -26,6 +27,8 @@ function onFormSubmit(e) {
     e.currentTarget.elements.searchQuery.value.trim();
   fetchImgService.resetPage();
 
+  loadMoreBtnRef.classList.add(IS_HIDDEN);
+
   if (fetchImgService.searchQuery === '') {
     return Notiflix.Notify.failure('Please, enter your search query!.');
   }
@@ -38,6 +41,8 @@ function onFormSubmit(e) {
           'Sorry, there are no images matching your search query. Please try again.'
         );
       } else if (data.hits.length < 40) {
+        loadMoreBtnRef.classList.add(IS_HIDDEN);
+
         Notiflix.Notify.info(
           "We're sorry, but you've reached the end of search results."
         );
@@ -51,6 +56,7 @@ function onFormSubmit(e) {
     })
     .then(renderImgCards);
 
+  loadMoreBtnRef.classList.remove(IS_HIDDEN);
 }
 
 function onLoadMoreBtnClick() {
@@ -60,6 +66,8 @@ function onLoadMoreBtnClick() {
     startNumberOfImages += data.hits.length;
 
     if (startNumberOfImages === fetchImgService.totalHits) {
+      loadMoreBtnRef.classList.add(IS_HIDDEN);
+
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
